@@ -10,7 +10,6 @@ class Store {
     this.cache.queue.push(1)
   }
 }
-
 const store = new Store()
 
 @observer

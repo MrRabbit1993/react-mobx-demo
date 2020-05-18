@@ -1,0 +1,30 @@
+.input {
+    padding: 15px;
+    border: 1px solid #ccc;
+    font-size: 24px;
+    width: 400px;
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+}
+
+.toggle {
+    margin-right: 20px;
+}
+
+.title {
+    font-size: 24px;
+    color: #000;
+}
+.finished{
+    color:#ccc;
+    text-decoration: line-through;
+
+}
+.del{
+    
+}

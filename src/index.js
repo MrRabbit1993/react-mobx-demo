@@ -1,35 +1,52 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from "prop-types";
 import ReactDOM from 'react-dom';
-import { observable, action } from "mobx"
 import { observer } from "mobx-react"
+import store from "./mobx"
+import styles from "./index.module.css"
+import ListItem from "./list"
 
-class Store {
-  @observable cache = { queue: [] }
-  @action.bound refresh() {
-    this.cache.queue.push(1)
+const TodoList = observer((props) => {
+  const { store: { lists, createList, unFinish,removeList } } = props;
+  console.log("渲染", props)
+  const [inputVal, setInputVal] = useState('');//输入框的值
+  const _del = useCallback(()=>removeList,[removeList])
+  // console.log("_del",_del,typeof _del)
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    createList(inputVal);//创建一条代办
+    setInputVal("");//清空输入框
   }
-}
-const store = new Store()
-
-const Bar = observer((props) => {
-  const { queue } = props
-  return <span>{queue.length}</span>
+  const handleChange = (event) => {
+    const inputValue = event.target.value;
+    setInputVal(inputValue)
+  }
+  return (
+    <div className="todo-list">
+      <header>
+        <form onSubmit={handleSubmit}>
+          <input type="text" onChange={handleChange} value={inputVal} className={styles.input} placeholder="请输入待办项" />
+        </form>
+      </header>
+      <ul>
+        {
+          lists.map(list => {
+            return <ListItem key={list.id} list={list} delList={removeList}/>
+          })
+        }
+      </ul>
+      <footer>{unFinish} item(s) unfinished</footer>
+    </div>
+  )
 })
-Bar.propTypes = {
-  queue: PropTypes.array
+TodoList.propTypes = {
+  store: PropTypes.shape({
+    lists: PropTypes.arrayOf(PropTypes.object).isRequired,
+    createList: PropTypes.func
+  }).isRequired
 }
-const Foo = (props) => {
-  const { cache, refresh } = props
-  return (<div>
-    <button onClick={refresh}>refresh</button>
-    <Bar queue={cache.queue} />
-  </div>)
-}
-Foo.propTypes = {
-  cache: PropTypes.object
-}
+
 ReactDOM.render(
-  <Foo cache={store.cache} refresh={store.refresh} />,
+  <TodoList store={store} />,
   document.getElementById('root')
 );
