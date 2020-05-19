@@ -2,10 +2,11 @@ import { observer } from "mobx-react";
 import PropTypes from "prop-types";
 import React from "react";
 import styles from "./index.module.css"
+import {trace,toJS} from "mobx"
 const  List = observer((props)=>{
     const {list,delList} = props;
     const {finished,title,toggle} = list;
-    console.log("子集渲染")
+    trace()
     return (
         <li className={styles.list}>
             <input type="checkbox" className={styles.toggle} checked={finished} onChange={toggle}/>

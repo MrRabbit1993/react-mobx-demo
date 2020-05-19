@@ -1,14 +1,15 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import PropTypes from "prop-types";
 import ReactDOM from 'react-dom';
 import { observer } from "mobx-react"
 import store from "./mobx"
 import styles from "./index.module.css"
 import ListItem from "./list"
+import {trace,toJS} from "mobx"
 
 const TodoList = observer((props) => {
+ 
   const { store: { lists, createList, unFinish,removeList } } = props;
-  console.log("渲染", props)
   const [inputVal, setInputVal] = useState('');//输入框的值
   // const _del = useMemo(()=>removeList,[])
   // const _lists = useMemo(()=>lists,[lists])
@@ -22,6 +23,8 @@ const TodoList = observer((props) => {
     const inputValue = event.target.value;
     setInputVal(inputValue)
   }
+  
+  trace()
   return (
     <div className="todo-list">
       <header>
