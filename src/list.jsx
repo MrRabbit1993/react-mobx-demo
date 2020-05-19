@@ -2,10 +2,10 @@ import { observer } from "mobx-react";
 import PropTypes from "prop-types";
 import React from "react";
 import styles from "./index.module.css"
-const  List = (props)=>{
+const  List = observer((props)=>{
     const {list,delList} = props;
     const {finished,title,toggle} = list;
-    console.log("时间",delList,typeof delList)
+    console.log("子集渲染")
     return (
         <li className={styles.list}>
             <input type="checkbox" className={styles.toggle} checked={finished} onChange={toggle}/>
@@ -13,7 +13,7 @@ const  List = (props)=>{
             <span className={styles.del} onClick={()=>delList(list)}>X</span>
         </li>
     )
-}
+})
 List.propTypes={
     list:PropTypes.shape({
         id:PropTypes.number.isRequired,

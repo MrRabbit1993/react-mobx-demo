@@ -19,7 +19,7 @@ class Store {
         this.lists.unshift(new List(title))
     }
     @action.bound removeList(list) {//构建一个删除
-        debugger
+        console.log("删除")
         this.lists.remove(list)   //remove 是mobx observable提供的，非原生js
     }
     @computed get unFinish() {//未完成的数量 .依赖可观察的变量，需要computed

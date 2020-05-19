@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState} from 'react';
 import PropTypes from "prop-types";
 import ReactDOM from 'react-dom';
 import { observer } from "mobx-react"
@@ -10,8 +10,9 @@ const TodoList = observer((props) => {
   const { store: { lists, createList, unFinish,removeList } } = props;
   console.log("渲染", props)
   const [inputVal, setInputVal] = useState('');//输入框的值
-  const _del = useCallback(()=>removeList,[removeList])
-  // console.log("_del",_del,typeof _del)
+  // const _del = useMemo(()=>removeList,[])
+  // const _lists = useMemo(()=>lists,[lists])
+  // const _del = useCallback(removeList,[removeList])
   const handleSubmit = (event) => {
     event.preventDefault();
     createList(inputVal);//创建一条代办
