@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import store from "./mobx"
 import styles from "./index.module.css"
 import ListItem from "./list"
-import {trace,toJS} from "mobx"
+import {trace,toJS, observable} from "mobx"
 
 const TodoList = observer((props) => {
  
@@ -39,7 +39,7 @@ const TodoList = observer((props) => {
           })
         }
       </ul>
-      <footer>{unFinish} item(s) unfinished</footer>
+      <Footer unFinish={unFinish}/>
     </div>
   )
 })
@@ -48,6 +48,11 @@ TodoList.propTypes = {
     lists: PropTypes.arrayOf(PropTypes.object).isRequired,
     createList: PropTypes.func
   }).isRequired
+}
+
+const Footer = (props)=>{
+  const {unFinish} = props; 
+  return <footer>{unFinish} item(s) unfinished</footer>
 }
 
 ReactDOM.render(
